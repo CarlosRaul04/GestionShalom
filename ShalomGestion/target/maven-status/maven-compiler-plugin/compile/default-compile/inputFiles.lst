@@ -1,3 +1,12 @@
-C:\Users\Carlos\Documents\NetBeansProjects\ShalomGestion\src\main\java\com\mycompany\shalomgestion\ShalomGestion.java
-C:\Users\Carlos\Documents\NetBeansProjects\ShalomGestion\src\main\java\com\utils\shalomgestion\conexionBD.java
-C:\Users\Carlos\Documents\NetBeansProjects\ShalomGestion\src\main\java\com\View\shalomgestion\MenuView.java
+C:\Users\Carlos\Documents\NetBeansProjects\GestionShalom\ShalomGestion\src\main\java\com\DAO\shalomgestion\UsuarioDAO.java
+C:\Users\Carlos\Documents\NetBeansProjects\GestionShalom\ShalomGestion\src\main\java\com\Model\shalomgestion\Destino.java
+C:\Users\Carlos\Documents\NetBeansProjects\GestionShalom\ShalomGestion\src\main\java\com\Model\shalomgestion\GestionInventario.java
+C:\Users\Carlos\Documents\NetBeansProjects\GestionShalom\ShalomGestion\src\main\java\com\Model\shalomgestion\Inventario.java
+C:\Users\Carlos\Documents\NetBeansProjects\GestionShalom\ShalomGestion\src\main\java\com\Model\shalomgestion\Notificaciones.java
+C:\Users\Carlos\Documents\NetBeansProjects\GestionShalom\ShalomGestion\src\main\java\com\Model\shalomgestion\Producto.java
+C:\Users\Carlos\Documents\NetBeansProjects\GestionShalom\ShalomGestion\src\main\java\com\Model\shalomgestion\Usuario.java
+C:\Users\Carlos\Documents\NetBeansProjects\GestionShalom\ShalomGestion\src\main\java\com\mycompany\shalomgestion\ShalomGestion.java
+C:\Users\Carlos\Documents\NetBeansProjects\GestionShalom\ShalomGestion\src\main\java\com\Services\shalomgestion\LoginService.java
+C:\Users\Carlos\Documents\NetBeansProjects\GestionShalom\ShalomGestion\src\main\java\com\utils\shalomgestion\conexionBD.java
+C:\Users\Carlos\Documents\NetBeansProjects\GestionShalom\ShalomGestion\src\main\java\com\View\shalomgestion\IniciarSesion.java
+C:\Users\Carlos\Documents\NetBeansProjects\GestionShalom\ShalomGestion\src\main\java\com\View\shalomgestion\MenuView.java

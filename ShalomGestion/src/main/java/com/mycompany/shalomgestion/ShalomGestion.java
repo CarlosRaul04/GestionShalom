@@ -4,6 +4,7 @@
 
 package com.mycompany.shalomgestion;
 
+import com.View.shalomgestion.IniciarSesion;
 import com.View.shalomgestion.MenuView;
 import com.utils.shalomgestion.conexionBD;
 import java.sql.Connection;
@@ -20,10 +21,10 @@ public class ShalomGestion {
         SwingUtilities.invokeLater(() -> {
         
             //Creamos la instancia del menu
-            MenuView menu = new MenuView();
+            IniciarSesion menu = new IniciarSesion();
             
             menu.setVisible(true);
-            menu.setSize(800, 600);
+            menu.setSize(400, 320);
             menu.setLocationRelativeTo(null);
     });
         
