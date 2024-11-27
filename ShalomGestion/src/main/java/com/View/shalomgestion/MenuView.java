@@ -4,19 +4,73 @@
  */
 package com.View.shalomgestion;
 
+import com.DAO.shalomgestion.GestionInventarioDAO;
+import com.Model.shalomgestion.GestionInventario;
+import com.Services.shalomgestion.MenuService;
+import com.utils.shalomgestion.conexionBD;
+import java.sql.Connection;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
 /**
  *
  * @author Carlos
  */
 public class MenuView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MenuView
-     */
+    private final DefaultTableModel dtm = new DefaultTableModel();
+    private final MenuService menuService;
+
     public MenuView() {
         initComponents();
+        menuService = new MenuService(); // Se inicializa el servicio
+        configurarTabla();
+        cargarDatosEnTabla(); // Cargar los datos en la tabla en el constructor
     }
 
+    private void configurarTabla() {
+        String[] titulos = {
+            "ID", "Producto", "Cantidad", "Estado Producto", "Descripción",
+            "Fecha Entrada", "Fecha Salida", "Tiempo Excedente", "Destino"
+        };
+        dtm.setColumnIdentifiers(titulos);
+        TablaGestion.setModel(dtm);
+    }
+
+    private void cargarDatosEnTabla() {
+        List<GestionInventario> registros = menuService.obtenerTodosLosRegistros();
+
+        if (registros == null || registros.isEmpty()) {
+            System.out.println("No se encontraron registros.");
+            return;
+        }
+
+        System.out.println("Número de registros: " + registros.size()); // Verifica cuántos registros se recuperan
+
+        dtm.setRowCount(0); // Limpiar la tabla antes de cargar datos
+
+        // Llenar la tabla con los datos
+        for (GestionInventario registro : registros) {
+            dtm.addRow(new Object[]{
+                registro.getId(),
+                registro.getProducto().getNombre(),
+                registro.getCantidad(),
+                registro.getEstado(),
+                registro.getDescripcion(),
+                registro.getFechaEntrada(),
+                registro.getFechaSalidaMaxima(),
+                registro.getTiempoExcedente(),
+                registro.getDestino().getDepartamento() + ", " +
+                registro.getDestino().getCiudad() + ", " +
+                registro.getDestino().getDireccion()
+            });
+        }
+
+        // Actualizar el contador de registros
+        jLabel3.setText(String.valueOf(registros.size()));
+    }
+
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,7 +81,7 @@ public class MenuView extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaGestion = new javax.swing.JTable();
         btnBuscar = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -40,7 +94,7 @@ public class MenuView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaGestion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -51,7 +105,7 @@ public class MenuView extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(TablaGestion);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 960, -1));
 
@@ -137,6 +191,7 @@ public class MenuView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TablaGestion;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -145,7 +200,6 @@ public class MenuView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

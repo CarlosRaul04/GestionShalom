@@ -12,9 +12,9 @@ import java.time.LocalDate;
  */
 public class GestionInventario {
     private int id;
-    private int idProducto;
-    private int idInventario;
-    private int idDestino;
+    private Producto producto;
+    private Inventario inventario;
+    private Destino destino;
     private int cantidad;
     private String descripcion;
     private LocalDate fechaEntrada;
@@ -23,11 +23,11 @@ public class GestionInventario {
     private String estado; 
     
       // Constructor completo
-    public GestionInventario(int id, int idProducto, int idInventario, int idDestino, int cantidad, String descripcion, LocalDate fechaEntrada, LocalDate fechaSalidaMaxima, int tiempoExcedente, String estado) {
+    public GestionInventario(int id, Producto producto, Inventario inventario, Destino destino, int cantidad, String descripcion, LocalDate fechaEntrada, LocalDate fechaSalidaMaxima, int tiempoExcedente, String estado) {
         this.id = id;
-        this.idProducto = idProducto;
-        this.idInventario = idInventario;
-        this.idDestino = idDestino;
+        this.producto = producto;
+        this.inventario = inventario;
+        this.destino = destino;
         this.cantidad = cantidad;
         this.descripcion = descripcion;
         this.fechaEntrada = fechaEntrada;
@@ -36,36 +36,36 @@ public class GestionInventario {
         this.estado = estado;
     }
 
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    public Inventario getInventario() {
+        return inventario;
+    }
+
+    public void setInventario(Inventario inventario) {
+        this.inventario = inventario;
+    }
+
+    public Destino getDestino() {
+        return destino;
+    }
+
+    public void setDestino(Destino destino) {
+        this.destino = destino;
+    }
+    
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
-    }
-
-    public int getIdInventario() {
-        return idInventario;
-    }
-
-    public void setIdInventario(int idInventario) {
-        this.idInventario = idInventario;
-    }
-
-    public int getIdDestino() {
-        return idDestino;
-    }
-
-    public void setIdDestino(int idDestino) {
-        this.idDestino = idDestino;
     }
 
     public int getCantidad() {

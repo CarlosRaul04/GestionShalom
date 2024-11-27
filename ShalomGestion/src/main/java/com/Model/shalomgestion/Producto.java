@@ -9,7 +9,7 @@ package com.Model.shalomgestion;
  * @author Carlos
  */
 public class Producto {
-     private int id;
+    private String id;
     private String nombre;
     private String descripcion;
     private double peso;
@@ -18,7 +18,7 @@ public class Producto {
 
 
     // Constructor completo
-    public Producto(int id, String nombre, String descripcion, double peso, String medidas, double precio) {
+    public Producto(String id, String nombre, String descripcion, double peso, String medidas, double precio) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -27,11 +27,11 @@ public class Producto {
         this.precio = precio;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

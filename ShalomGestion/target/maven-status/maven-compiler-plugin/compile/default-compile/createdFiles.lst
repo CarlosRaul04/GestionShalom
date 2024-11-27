@@ -1,6 +1,7 @@
 com\utils\shalomgestion\conexionBD.class
 com\Model\shalomgestion\Destino.class
 com\DAO\shalomgestion\UsuarioDAO.class
+com\DAO\shalomgestion\GestionInventarioDAO.class
 com\View\shalomgestion\IniciarSesion$3.class
 com\View\shalomgestion\MenuView$3.class
 com\Model\shalomgestion\Inventario.class
@@ -11,6 +12,7 @@ com\View\shalomgestion\IniciarSesion$2.class
 com\Model\shalomgestion\Notificaciones.class
 com\View\shalomgestion\IniciarSesion$1.class
 com\View\shalomgestion\MenuView$2.class
+com\Services\shalomgestion\MenuService.class
 com\Model\shalomgestion\Producto.class
 com\View\shalomgestion\MenuView$1.class
 com\View\shalomgestion\MenuView.class
