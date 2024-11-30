@@ -35,4 +35,45 @@ public class MenuService {
 
         return registros;
     }
+
+    public List<GestionInventario> buscarPorProducto(String productoNombre, String estadoProducto) {
+        List<GestionInventario> registros = null;
+
+        try (Connection connection = conexionBD.getConnection()) {
+            registros = gestionInventarioDAO.buscarPorProducto(connection, productoNombre, estadoProducto);
+        } catch (Exception e) {
+            System.out.println("Error al buscar por producto: " + e.getMessage());
+        }
+
+        return registros;
+    }
+    
+     public boolean modificarEstado(int id) {
+         
+         try (Connection connection = conexionBD.getConnection()) {
+           if (gestionInventarioDAO.modificarEstado(connection, id)){
+               return true;
+           }
+         } catch (Exception e) {
+             System.out.println("Error al modificar estado: " + e.getMessage());
+         }
+         
+         return true;
+    }
+    
+    public List<GestionInventario> buscarPorEstado(String estado) {
+        List<GestionInventario> registros = null;
+
+        try (Connection connection = conexionBD.getConnection()) {
+            registros = gestionInventarioDAO.buscarPorEstado(connection, estado);
+        } catch (Exception e) {
+            System.out.println("Error al buscar por producto: " + e.getMessage());
+        }
+
+        return registros;
+    }
+    
+    
+    
+   
 }

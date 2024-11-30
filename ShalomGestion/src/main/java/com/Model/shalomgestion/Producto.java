@@ -15,18 +15,28 @@ public class Producto {
     private double peso;
     private String medidas;
     private double precio;
+    private String estado;
 
 
     // Constructor completo
-    public Producto(String id, String nombre, String descripcion, double peso, String medidas, double precio) {
+    public Producto(String id, String nombre, String descripcion, double peso, String medidas, double precio, String estado) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.peso = peso;
         this.medidas = medidas;
         this.precio = precio;
+        this.estado = estado;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
     public String getId() {
         return id;
     }

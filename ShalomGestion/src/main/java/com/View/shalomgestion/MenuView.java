@@ -6,11 +6,15 @@ package com.View.shalomgestion;
 
 import com.DAO.shalomgestion.GestionInventarioDAO;
 import com.Model.shalomgestion.GestionInventario;
+import com.Model.shalomgestion.Producto;
 import com.Services.shalomgestion.MenuService;
+import com.Services.shalomgestion.ProductoService;
 import com.utils.shalomgestion.conexionBD;
 import java.sql.Connection;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Carlos
@@ -36,19 +40,11 @@ public class MenuView extends javax.swing.JFrame {
         TablaGestion.setModel(dtm);
     }
 
-    private void cargarDatosEnTabla() {
-        List<GestionInventario> registros = menuService.obtenerTodosLosRegistros();
+    private void llenarTablaConRegistros(List<GestionInventario> registros) {
+        // Limpiar la tabla antes de agregar los nuevos datos
+        dtm.setRowCount(0);
 
-        if (registros == null || registros.isEmpty()) {
-            System.out.println("No se encontraron registros.");
-            return;
-        }
-
-        System.out.println("Número de registros: " + registros.size()); // Verifica cuántos registros se recuperan
-
-        dtm.setRowCount(0); // Limpiar la tabla antes de cargar datos
-
-        // Llenar la tabla con los datos
+        // Llenar la tabla con los datos de los registros
         for (GestionInventario registro : registros) {
             dtm.addRow(new Object[]{
                 registro.getId(),
@@ -64,6 +60,19 @@ public class MenuView extends javax.swing.JFrame {
                 registro.getDestino().getDireccion()
             });
         }
+    }
+    
+    private void cargarDatosEnTabla() {
+        List<GestionInventario> registros = menuService.obtenerTodosLosRegistros();
+
+        if (registros == null || registros.isEmpty()) {
+            System.out.println("No se encontraron registros.");
+            return;
+        }
+
+        System.out.println("Número de registros: " + registros.size()); // Verifica cuántos registros se recuperan
+
+        llenarTablaConRegistros(registros);
 
         // Actualizar el contador de registros
         jLabel3.setText(String.valueOf(registros.size()));
@@ -83,17 +92,20 @@ public class MenuView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaGestion = new javax.swing.JTable();
         btnBuscar = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txtBuscar = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        btnEstado = new javax.swing.JButton();
+        cbEstado = new javax.swing.JComboBox<>();
+        btnVerProducto = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        TablaGestion.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         TablaGestion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -109,17 +121,25 @@ public class MenuView extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 960, -1));
 
+        btnBuscar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 60, 70, 30));
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 290, 30));
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 70, 30));
 
+        txtBuscar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 200, 30));
+
+        jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton1.setText("Cerrar");
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -129,17 +149,46 @@ public class MenuView extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 110, 40));
 
+        jButton2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton2.setText("Agregar Producto");
         jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 570, 140, 40));
 
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel1.setText("Registros: ");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 540, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 540, -1, 20));
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 540, 40, 20));
 
-        jButton3.setText("Modificar Producto");
-        jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 570, 140, 40));
+        btnEstado.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnEstado.setText("Modificar Estado");
+        btnEstado.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEstadoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 570, 140, 40));
+
+        cbEstado.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "En almacén", "Enviado" }));
+        cbEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEstadoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 80, 120, -1));
+
+        btnVerProducto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnVerProducto.setText("Ver Producto");
+        btnVerProducto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnVerProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerProductoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnVerProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 570, 140, 40));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondo.png"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, -1));
@@ -147,13 +196,106 @@ public class MenuView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtBuscarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+         // Obtener el texto ingresado en el campo de búsqueda
+        String textoBusqueda = txtBuscar.getText().trim();
+        String estadoSeleccionado = (String) cbEstado.getSelectedItem();
+        
+        if (!textoBusqueda.isEmpty()) {
+            List<GestionInventario> registros = menuService.buscarPorProducto(textoBusqueda, estadoSeleccionado);
+            if (registros == null || registros.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No se encontraron registros que coincidan.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            } else {
+                System.out.println("Resultados de la búsqueda: " + registros.size());
+                
+                llenarTablaConRegistros(registros);
+                
+                jLabel3.setText(String.valueOf(registros.size()));
+            }
+        } else {
+            // Si no se ingresa nada en el campo de búsqueda, cargar todos los registros
+            cargarDatosEnTabla();
+        }
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void cbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEstadoActionPerformed
+        // Obtener el estado seleccionado del ComboBox
+        String estadoSeleccionado = (String) cbEstado.getSelectedItem();
+
+        // Llamar al servicio para buscar los registros según el estado
+        List<GestionInventario> registros = menuService.buscarPorEstado(estadoSeleccionado);
+    
+        if (registros == null || registros.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se encontraron registros que coincidan con el estado seleccionado.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            cbEstado.setSelectedIndex(0);
+        } else {
+            System.out.println("Resultados de la búsqueda por estado: " + registros.size());
+        
+            // Llenar la tabla con los registros filtrados por estado
+            llenarTablaConRegistros(registros);
+        
+            // Actualizar el contador de registros
+            jLabel3.setText(String.valueOf(registros.size()));
+        }
+    }//GEN-LAST:event_cbEstadoActionPerformed
+
+    private void btnEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadoActionPerformed
+        // Obtener el registro seleccionado en la tabla
+        int filaSeleccionada = TablaGestion.getSelectedRow();
+
+        if (filaSeleccionada != -1) { // Si hay una fila seleccionada
+            int idRegistro = (Integer) TablaGestion.getValueAt(filaSeleccionada, 0); // Obtener el ID del registro
+
+            // Llamar al servicio para modificar el estado
+            boolean exito = menuService.modificarEstado(idRegistro); // Pasa la conexión actual
+
+        if (exito) {
+            JOptionPane.showMessageDialog(this, "Estado modificado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            cargarDatosEnTabla(); // Recargar los datos en la tabla para mostrar los cambios
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo modificar el estado.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione un registro de la tabla.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+    }
+    }//GEN-LAST:event_btnEstadoActionPerformed
+
+    private void btnVerProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerProductoActionPerformed
+        // Obtiene el JTable donde el usuario selecciona el producto
+        int filaSeleccionada = TablaGestion.getSelectedRow();
+    
+        if (filaSeleccionada != -1) {
+            // Obtiene el nombre del producto desde la columna correspondiente de la tabla
+            String nombre = TablaGestion.getValueAt(filaSeleccionada, 1).toString(); // Suponiendo que el nombre está en la primera columna (índice 0)
+
+            // Llama al servicio para obtener el producto usando el nombre
+            ProductoService productoService = new ProductoService();
+            Producto producto = productoService.obtenerProducto(nombre);
+        
+            // Si el producto existe, lo muestra en la ventana VerProducto
+            if (producto != null) {
+                VerProducto verProducto = new VerProducto();
+                verProducto.setProductoData(producto);
+                verProducto.setVisible(true);
+                verProducto.setLocationRelativeTo(null);
+            } else {
+                // Si no se encuentra el producto, muestra un mensaje de error o advertencia
+                JOptionPane.showMessageDialog(null, "Producto no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            // Si no se ha seleccionado ninguna fila en la tabla, muestra un mensaje de advertencia
+            JOptionPane.showMessageDialog(null, "Por favor, seleccione registro de la tabla", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnVerProductoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -193,13 +335,15 @@ public class MenuView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaGestion;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnEstado;
+    private javax.swing.JButton btnVerProducto;
+    private javax.swing.JComboBox<String> cbEstado;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }
