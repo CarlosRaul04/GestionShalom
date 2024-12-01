@@ -35,6 +35,29 @@ public class GestionInventarioDAO {
     public GestionInventarioDAO() {
         // No es necesario inicializar la conexión aquí
     }
+    
+    public boolean crearGestionInventario(Connection connection, String productoId, int idDestino, int cantidad, String descripcion, Date fechaSalidaMax, int tiempoExcedente) {
+        String query = "INSERT INTO gestion_inventario (producto_id, inventario_id, origen, destino_id, cantidad, estado_producto, descripcion, fecha_entrada, fecha_salida_max, tiempo_excedente) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, productoId);
+            stmt.setInt(2, 7); // id_inventario (siempre 1)
+            stmt.setString(3, "Lima"); // origen (siempre Lima)
+            stmt.setInt(4, idDestino);
+            stmt.setInt(5, cantidad);
+            stmt.setString(6, "En almacén"); // estado_producto
+            stmt.setString(7, descripcion);
+            stmt.setDate(8, Date.valueOf(LocalDate.now())); // fecha_entrada (día de hoy)
+            stmt.setDate(9, fechaSalidaMax);
+            stmt.setInt(10, tiempoExcedente);
+
+            int filasAfectadas = stmt.executeUpdate();
+            return filasAfectadas > 0; // Devuelve true si se insertó correctamente
+        } catch (SQLException e) {
+            e.printStackTrace(); // Imprime el error para depuración
+            return false; // Devuelve false en caso de error
+        }
+    }
 
     // Método para obtener todos los registros de gestión de inventario
     public List<GestionInventario> obtenerTodos(Connection connection) {
@@ -129,6 +152,7 @@ public class GestionInventarioDAO {
             return false; // En caso de error, devuelve false
         }
     }
+    
     
     
 

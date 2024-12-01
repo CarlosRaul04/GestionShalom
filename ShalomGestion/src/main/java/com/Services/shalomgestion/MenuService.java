@@ -8,6 +8,7 @@ import com.DAO.shalomgestion.GestionInventarioDAO;
 import com.Model.shalomgestion.GestionInventario;
 import com.utils.shalomgestion.conexionBD;
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.List;
 /**
  *
@@ -35,6 +36,21 @@ public class MenuService {
 
         return registros;
     }
+    
+    public boolean crearGestionInventario(String productoId, int idDestino, int cantidad, String descripcion, Date fechaSalidaMax, int tiempoExcedente){
+        
+        boolean exito = false;
+        
+        try(Connection connection = conexionBD.getConnection()) {
+            
+            exito = gestionInventarioDAO.crearGestionInventario(connection, productoId, idDestino, cantidad, descripcion, fechaSalidaMax, tiempoExcedente);
+             
+        } catch (Exception e){
+            System.out.println("Error al crear un registro en el inventario: " + e.getMessage());
+        }
+        
+        return exito;
+    }
 
     public List<GestionInventario> buscarPorProducto(String productoNombre, String estadoProducto) {
         List<GestionInventario> registros = null;
@@ -50,15 +66,17 @@ public class MenuService {
     
      public boolean modificarEstado(int id) {
          
+         boolean exito = false;
+         
          try (Connection connection = conexionBD.getConnection()) {
-           if (gestionInventarioDAO.modificarEstado(connection, id)){
-               return true;
-           }
+           
+             exito = gestionInventarioDAO.modificarEstado(connection, id);
+           
          } catch (Exception e) {
              System.out.println("Error al modificar estado: " + e.getMessage());
          }
          
-         return true;
+         return exito;
     }
     
     public List<GestionInventario> buscarPorEstado(String estado) {

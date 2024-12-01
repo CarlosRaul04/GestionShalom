@@ -62,6 +62,7 @@ public class MenuView extends javax.swing.JFrame {
         }
     }
     
+    
     private void cargarDatosEnTabla() {
         List<GestionInventario> registros = menuService.obtenerTodosLosRegistros();
 
@@ -94,12 +95,13 @@ public class MenuView extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         txtBuscar = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btnEstado = new javax.swing.JButton();
         cbEstado = new javax.swing.JComboBox<>();
         btnVerProducto = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -149,16 +151,23 @@ public class MenuView extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 110, 40));
 
-        jButton2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton2.setText("Agregar Producto");
-        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 570, 140, 40));
+        btnAgregar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnAgregar.setText("Agregar Producto");
+        btnAgregar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 570, 140, 40));
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Registros: ");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 540, -1, 20));
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 540, 40, 20));
 
         btnEstado.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -190,6 +199,11 @@ public class MenuView extends javax.swing.JFrame {
         });
         getContentPane().add(btnVerProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 570, 140, 40));
 
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Buscar por Producto:");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
+
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondo.png"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, -1));
 
@@ -197,7 +211,7 @@ public class MenuView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtBuscarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -297,6 +311,13 @@ public class MenuView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnVerProductoActionPerformed
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        AgregarProductoView agregarView = new AgregarProductoView();
+        
+        agregarView.setVisible(true);
+        agregarView.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -334,15 +355,16 @@ public class MenuView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaGestion;
+    private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEstado;
     private javax.swing.JButton btnVerProducto;
     private javax.swing.JComboBox<String> cbEstado;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables

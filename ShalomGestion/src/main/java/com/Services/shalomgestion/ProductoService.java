@@ -34,4 +34,17 @@ public class ProductoService {
         return registro;
     }
     
+    public Producto crearProducto(Producto producto) {
+        Producto productoCreado = null;
+
+        try (Connection connection = conexionBD.getConnection()) {
+            productoCreado = productoDAO.crearProducto(connection, producto);
+        } catch (Exception e) {
+            System.out.println("Error al crear producto: " + e.getMessage());
+            e.printStackTrace(); 
+        }
+
+        return productoCreado;
+}
+    
 }
